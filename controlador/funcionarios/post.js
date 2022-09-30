@@ -10,7 +10,7 @@ exports.Insere = ( req, res ) => {
     const query = ` INSERT INTO funcionarios (nome, cargo, contato, usuario, ) VALUES ( "${nome}" , "${cargo}", "${contato}" ,"${usuario}"); `;
     connection.query( query,
         (err, results) => 
-            results ? res.status(200).send(results) : res.status(400).send(err)
+            results ? res.status(201).send(results) : res.status(400).send(err)
     );
 
 }

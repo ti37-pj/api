@@ -11,7 +11,7 @@ exports.Insere = ( req, res ) => {
     const query = ` INSERT INTO clientes (nome, telefone, email, cpf, senha) VALUES ( "${nome}" , "${telefone}", "${email}" , ${cpf} , "${senha}"); `;
     connection.query( query,
         (err, results) => 
-            results ? res.status(200).send(results) : res.status(400).send(err)
+            results ? res.status(201).send(results) : res.status(400).send(err)
     );
 
 }

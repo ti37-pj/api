@@ -1,5 +1,5 @@
 const rotas = require("express").Router();
-const caminho = ( metodo ) => require("../controlador/produtos/"+ metodo);
+const caminho = ( metodo ) => require("../controlador/categorias/"+ metodo);
 
 // GET
 rotas.get("/busca_todos", caminho("get").BuscaTodos );
@@ -9,9 +9,6 @@ rotas.get("/busca/:id", caminho("get").Busca);
 rotas.post("/insere", caminho("post").Insere );
 
 // DELETE
- rotas.delete("/deleta/:id", caminho("delete").Deleta );
-
- // PUT
- rotas.put("/altera/:id", caminho("put").Altera );
+// rotas.delete("/:id", caminho("delete").Remove );
 
 module.exports = rotas;

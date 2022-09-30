@@ -2,9 +2,9 @@ const { connection } = require("../../banco/banco.js");
 
 exports.Insere = ( req, res ) => {
 
-    const id_cliente = req.body.id_cliente;
+    const nome = req.body.nome;
 
-    const query = ` INSERT INTO vendas (id_cliente) VALUES ( ${id_cliente} ); `;
+    const query = ` INSERT INTO cupons (nome) VALUES ( "${nome}" ); `;
     connection.query( query,
         (err, results) => 
             results ? res.status(201).send(results) : res.status(400).send(err)

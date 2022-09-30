@@ -17,7 +17,7 @@ exports.Busca = ( req, res ) => {
     const query = ` SELECT * FROM cupons WHERE id = ${ id }; `
     connection.query( query,
         (err, results) => 
-            results ? res.status(200).send(results) : res.status(400).send(err)
+            results ? res.status(201).send(results) : res.status(400).send(err)
     );
 
 }   

@@ -2,7 +2,7 @@ const { connection } = require("../../banco/banco.js");
 
 exports.BuscaTodos = ( req, res ) => {
 
-    const query = ` SELECT * FROM produtos ORDER BY id DESC ; `;
+    const query = ` SELECT * FROM categorias ORDER BY id DESC ; `;
     connection.query( query,
         (err, results) => 
             results ? res.status(200).send(results) : res.status(400).send(err)
@@ -14,7 +14,7 @@ exports.Busca = ( req, res ) => {
 
     const id = req.params.id;
 
-    const query = ` SELECT * FROM produtos WHERE id = ${ id }; `
+    const query = ` SELECT * FROM categorias WHERE id = ${ id }; `
     connection.query( query,
         (err, results) => 
             results ? res.status(201).send(results) : res.status(400).send(err)

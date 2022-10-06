@@ -7,7 +7,7 @@ exports.Altera = ( req, res ) => {
     const quantidade = req.body.quantidade;
     const desconto = req.body.desconto;
 
-    const query = ` UPDATE cupons SET (nome, quantidade, desconto) VALUES ( "${nome}" , "${desconto}", ${quantidade} ) WHERE id = ${id};`;
+    const query = ` UPDATE cupons SET nome = "${nome}", desconto = ${desconto}, quantidade = ${quantidade}  WHERE id = ${id};`;
     connection.query( query,
         (err, results) => 
             results ? res.status(200).send(results) : res.status(400).send(err)

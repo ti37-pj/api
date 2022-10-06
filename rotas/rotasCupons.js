@@ -9,7 +9,7 @@ rotas.get("/busca/:id", caminho("get").Busca);
 rotas.post("/insere", caminho("post").Insere );
 
 // DELETE
-// rotas.delete("/deleta/:id", caminho("delete").Deleta );
+rotas.delete("/deleta/:id", caminho("delete").Deleta );
 
 // PUT
 rotas.put("/altera/:id", caminho("put").Altera );

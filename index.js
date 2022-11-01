@@ -1,9 +1,11 @@
 // CONEXÃO DO EXPRESS
 const express = require('express');
-const app = express()
-const port = 3001
+const app = express();
+const cors = require('cors');
+const port = 3001;
 
 app.use(express.json());
+app.use(cors());
 
 // CORS - proteção de dados e conexões
 app.use(function(req, res, next) {

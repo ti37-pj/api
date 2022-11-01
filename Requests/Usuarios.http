@@ -1,0 +1,11 @@
+### POST de Pedidos
+POST http://localhost:3001/usuarios/insere HTTP/1.1
+content-type: application/json
+
+{
+    "nome"  : " Kaua ",
+    "telefone" : "16996079532",
+    "email" : "fillipie11@gmail.com",
+    "cpf" : "fillipie11@gmail.com",
+
+}

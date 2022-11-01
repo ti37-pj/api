@@ -2,15 +2,49 @@ const { connection } = require("../../banco/banco.js");
 
 exports.Insere = ( req, res ) => {
 
-    const id_venda = req.body.id_venda;
-    const id_produto = req.body.id_produto;
-    const quantidade = req.body.quantidade;
     const mesa = req.body.mesa;
+    const observacao = req.body.observacao;
+    const id_cliente = req.body.id_cliente;
 
-    const query = ` INSERT INTO pedidos (id_venda, id_produto, quantidade, mesa) VALUES ( ${id_venda} , ${id_produto} , ${quantidade} , ${mesa} ); `;
+    const query =  ` INSERT INTO pedidos ( mesa, observacao, id_cliente ) VALUES ( ${mesa}, "${observacao}", ${id_cliente} ); `;
     connection.query( query,
-        (err, results) => 
-            results ? res.status(201).send(results) : res.status(400).send(err)
+        (err, results) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                            
+                const produtos = req.body.produtos;
+                const id_pedidos = results.insertId; 
+                
+                if(!(err = InsereProdutosPedido ( produtos, id_pedidos))){
+                    res.status(201).send(results)
+                }else{
+                    res.status(400).send(err)
+                }
+            }
+        }
     );
+
+
+}
+
+function InsereProdutosPedido ( produtos, id_pedidos) {
+    for (const produto of produtos) {
+
+        const id_produtos = produto.id_produtos;
+        const quantidade = produto.quantidade;
+
+        const query = ` INSERT INTO pedidos_produtos (id_pedidos, id_produtos, quantidade) VALUES ( ${id_pedidos}, ${id_produtos}, ${quantidade} ); ` ;
+        connection.query( query,
+            (err, results) => {
+                if (err) {
+                    return err
+                } else {
+                    return 0
+                }
+            }
+            
+        );
+    }
 
 }

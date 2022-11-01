@@ -1,5 +1,5 @@
 const rotas = require("express").Router();
-const caminho = ( metodo ) => require("../controlador/clientes/"+ metodo);
+const caminho = ( metodo ) => require("../controlador/usuarios/"+ metodo);
 
 // GET
 rotas.get("/busca_todos", caminho("get").BuscaTodos );

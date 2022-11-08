@@ -3,13 +3,28 @@ POST http://localhost:3001/pedidos/insere HTTP/1.1
 content-type: application/json
 
 {
-    "produtos"  : [
+    "produtos" : [
         {"id_produtos": "22", "quantidade": "51" },
         {"id_produtos": "23", "quantidade": "41" }
     ],
     "observacao" : "Testando o pedido 9, sou Alérgico",
-    "mesa" : 09,
+    "mesa" : 9,
     "id_cliente" : 4
+}
+
+### PUT de Pedidos
+PUT http://localhost:3001/pedidos/altera/7 HTTP/1.1
+content-type: application/json
+
+{
+    "produtos" : [
+        {"id_produtos": "22", "quantidade": "51" },
+        {"id_produtos": "23", "quantidade": "41" }
+    ],
+    "observacao" : "Testando o pedido 9, sou Alérgico",
+    "mesa" : 9,
+    "id_cliente" : 4,
+    "status" : "aguardando"
 }
 
 ### GET de Pedido pela Mesa
@@ -17,13 +32,6 @@ GET  http://localhost:3001/pedidos/busca_mesa/6 HTTP/1.1
 content-type: application/json
 
 ### GET de Pedido pelo id_pedido
-GET  http://localhost:3001/pedidos/busca/5 HTTP/1.1
+GET  http://localhost:3001/pedidos/busca/7 HTTP/1.1
 content-type: application/json
 
-### PUT de status do Pedido
-PUT  http://localhost:3001/pedidos/altera/5 HTTP/1.1
-content-type: application/json
-
-{
-    "status" : "aguardando"
-}

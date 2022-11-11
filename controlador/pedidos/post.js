@@ -14,9 +14,9 @@ exports.Insere = ( req, res ) => {
             } else {
                             
                 const produtos = req.body.produtos;
-                const id_pedidos = results.insertId; 
+                const id_vendas = results.insertId; 
                 
-                if(!(err = InsereProdutosPedido ( produtos, id_pedidos))){
+                if(!(err = InsereProdutosPedido ( produtos, id_vendas))){
                     res.status(201).send(results)
                 }else{
                     res.status(400).send(err)

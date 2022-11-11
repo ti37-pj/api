@@ -1,0 +1,14 @@
+### POST de Vendas
+POST http://localhost:3001/vendas/insere HTTP/1.1
+content-type: application/json
+
+{
+    "pedidos" : [
+        {"id_pedidos": "33"}
+    ],
+    "total_custo": 10.00,
+    "total_venda": 10.00,
+    "forma_de_pagamento": "Cartão", 
+    "observacao": "Lanche",
+    "id_cliente": "4"
+}

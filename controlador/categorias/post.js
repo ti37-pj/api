@@ -9,5 +9,4 @@ exports.Insere = ( req, res ) => {
         (err, results) => 
             results ? res.status(201).send(results) : res.status(400).send(err)
     );
-
 }

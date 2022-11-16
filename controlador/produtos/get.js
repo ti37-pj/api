@@ -8,7 +8,6 @@ exports.BuscaTodos = ( req, res ) => {
         (err, results) => 
             results ? res.status(200).send(results) : res.status(400).send(err)
     );
-
 }
 
 exports.Busca = ( req, res ) => {
@@ -20,7 +19,6 @@ exports.Busca = ( req, res ) => {
         (err, results) => 
             results ? res.status(201).send(results) : res.status(400).send(err)
     );
-
 }   
 
 exports.BuscaTodosAleatorio = ( req, res ) => {
@@ -31,5 +29,4 @@ exports.BuscaTodosAleatorio = ( req, res ) => {
         (err, results) => 
             results ? res.status(201).send(results) : res.status(400).send(err)
     );
-
 }  

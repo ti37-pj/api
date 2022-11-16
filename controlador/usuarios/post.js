@@ -15,7 +15,6 @@ exports.Insere = ( req, res ) => {
         (err, results) => 
             results ? res.status(201).send(results) : res.status(400).send(err)
     );
-
 }
 
 
@@ -29,5 +28,4 @@ exports.Autentica = ( req, res ) => {
         (err, results) => 
             results ? res.status(200).send(results) : res.status(400).send(err)
     );
-
 }

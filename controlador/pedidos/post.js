@@ -24,8 +24,6 @@ exports.Insere = ( req, res ) => {
             }
         }
     );
-
-
 }
 
 function InsereProdutosPedido ( produtos, id_pedidos) {
@@ -42,9 +40,7 @@ function InsereProdutosPedido ( produtos, id_pedidos) {
                 } else {
                     return 0
                 }
-            }
-            
+            }       
         );
     }
-
 }

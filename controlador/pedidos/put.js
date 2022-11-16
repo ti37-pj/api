@@ -43,11 +43,9 @@ function InsereProdutosPedido ( produtos, id_pedidos) {
                 } else {
                     return 0
                 }
-            }
-            
+            }       
         );
     }
-
 }
 
 

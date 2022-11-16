@@ -7,7 +7,6 @@ exports.BuscaTodos = ( req, res ) => {
         (err, results) => 
             results ? res.status(200).send(results) : res.status(400).send(err)
     );
-
 }
 
 exports.Busca = ( req, res ) => {
@@ -37,8 +36,51 @@ exports.Busca = ( req, res ) => {
             }
         }
     );
-
 }   
+
+exports.BuscaTodosHoje = ( req, res ) => {
+
+    const query = ` SELECT * FROM pedidos WHERE registro > date_format(NOW(), "%Y-%m-%d") ; `;
+    connection.query( query,
+        (err, results) => {
+            if (err) {
+                res.status(400).send(err)
+            } else {
+                BuscaPedidos(results)
+                .then( retorno => {
+                    res.status(200).send(retorno)
+                })
+                .catch( error => {
+                    res.status(400).send(error)
+                })
+                
+            }
+        }
+    );
+} 
+
+function BuscaPedidos ( pedidos) { 
+    return new Promise( (resolve, reject) => {
+        var results = [];
+        for (const pedido of pedidos){
+            //console.log(pedido)
+            BuscaProdutosPedido(pedido.id)
+            .then( listaProdutos => {
+                //console.log(listaProdutos)
+                let p = pedido;
+                p = { ...p, 'produtos': listaProdutos }
+                results.push(p);
+                //console.log(results)
+            })
+            .catch( error => {
+                reject(error);
+            })
+        }
+        console.log(results)
+        resolve(results);
+    })
+
+}
 
 function BuscaProdutosPedido ( id_pedidos) { 
 
@@ -59,7 +101,7 @@ function BuscaProdutosPedido ( id_pedidos) {
 
     })
 
-    }
+}
 
 
 exports.BuscaUsuario = ( req, res ) => {
@@ -91,6 +133,18 @@ exports.BuscaNaoConcluidoPorMesa = ( req, res ) => {
     const mesa = req.params.mesa;
 
     const query = ` SELECT * FROM pedidos WHERE mesa = ${ mesa } AND status <> "concluido"  ; ` 
+    connection.query( query,
+        (err, results) => 
+            results ? res.status(200).send(results) : res.status(400).send(err)
+    );
+
+} 
+
+exports.BuscaNaoEnviadoPorMesa = ( req, res ) => {
+
+    const mesa = req.params.mesa;
+
+    const query = ` SELECT * FROM pedidos WHERE mesa = ${ mesa } AND status <> "enviado" AND status <> "concluido" ; ` 
     connection.query( query,
         (err, results) => 
             results ? res.status(200).send(results) : res.status(400).send(err)

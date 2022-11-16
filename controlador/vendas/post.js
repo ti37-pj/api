@@ -53,6 +53,5 @@ function InserePedidoVendas ( pedidos, id_venda) {
                 } 
             );
         }
-
     });
 }

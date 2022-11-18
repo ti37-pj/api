@@ -38,6 +38,7 @@ exports.Busca = ( req, res ) => {
     );
 }   
 
+// Busca todos os pedidos criados na data de hoje. A data é gerada pela função sql NOW()
 exports.BuscaTodosHoje = ( req, res ) => {
 
     const query = ` SELECT * FROM pedidos WHERE registro > date_format(NOW(), "%Y-%m-%d") ; `;
@@ -46,41 +47,92 @@ exports.BuscaTodosHoje = ( req, res ) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                BuscaPedidos(results)
-                .then( retorno => {
-                    res.status(200).send(retorno)
-                })
-                .catch( error => {
-                    res.status(400).send(error)
-                })
-                
+
+                // Guarda todos os ids dos pedidos na variável
+                const id_pedidos = results
+
+                // Array final com os pedidos listados juntos dos produtos
+                const pedidos_produtos = results;
+
+                // Função recursiva
+                const loopRecursivo = ( index, length ) => {
+
+                    // Esse é o breque e também a conclusão do loop
+                    if( index >= length ){
+                        res.status(200).send(pedidos_produtos)
+                        return;
+                    }
+                        
+                    let id_pedido = null;
+                    
+                    // Guarda o id do pedido atual
+                    if( id_pedidos[index] ){
+                        id_pedido = id_pedidos[index].id;
+                    }else{ // Se não houver, segue para o próximo loop
+                        index += 1;
+                        loopRecursivo(index, length)
+                        return;
+                    }
+
+                    BuscaProdutosPedido(id_pedido)
+                    .then(res => {
+
+                        pedidos_produtos[index].produto = {...res};
+
+                        // Adiciona +1 ao index e continua com a função recursiva
+                        index += 1;
+                        loopRecursivo(index, length)
+
+                    })
+                    .catch(res => {
+                        console.log(res);
+                        return; // em caso de erro da requisição ele sai da função de loop direto
+                    })
+                    
+
+                }
+
+                // Starta o loop, sempre começa do zero
+                loopRecursivo(0, id_pedidos.length)
+
             }
         }
     );
 } 
-
-function BuscaPedidos ( pedidos) { 
+  
+/*function BuscaPedidos ( pedidos) { 
+    
     return new Promise( (resolve, reject) => {
-        var results = [];
+        var arrayPedidos = [];  
+        
         for (const pedido of pedidos){
-            //console.log(pedido)
+            console.log("for:")
+            //console.log(arrayPedidos)
+            
             BuscaProdutosPedido(pedido.id)
             .then( listaProdutos => {
-                //console.log(listaProdutos)
-                let p = pedido;
-                p = { ...p, 'produtos': listaProdutos }
-                results.push(p);
-                //console.log(results)
+                console.log("then:")
+                //console.log(arrayPedidos)
+                let p; 
+                p = { ...pedido, 'produtos': listaProdutos }
+                arrayPedidos.push(p);
+                
             })
             .catch( error => {
-                reject(error);
+                reject(error)
             })
+        
         }
-        console.log(results)
-        resolve(results);
+        console.log("end for:")
+        if(arrayPedidos.id){
+            resolve(arrayPedidos);
+        }else{
+            console.log("vazio:")
+            reject("Results  vazio")
+        }
     })
 
-}
+}*/
 
 function BuscaProdutosPedido ( id_pedidos) { 
 

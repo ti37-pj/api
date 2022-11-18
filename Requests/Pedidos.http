@@ -35,6 +35,6 @@ content-type: application/json
 GET  http://localhost:3001/pedidos/busca/7 HTTP/1.1
 content-type: application/json
 
-### GET de Pedido pela Mesa
+### GET de Pedidos Hoje
 GET  http://localhost:3001/pedidos/busca_todos_hoje HTTP/1.1
-content-type: application/json
+content-type: application/json 

@@ -41,59 +41,57 @@ exports.Busca = ( req, res ) => {
 // Busca todos os pedidos criados na data de hoje. A data é gerada pela função sql NOW()
 exports.BuscaTodosHoje = ( req, res ) => {
 
-    const query = ` SELECT * FROM pedidos WHERE registro > date_format(NOW(), "%Y-%m-%d") ; `;
+    //const query = ` SELECT * FROM pedidos WHERE registro > date_format(NOW(), "%Y-%m-%d") ; `;
+    const query = `SELECT * FROM pedidos AS pe LEFT JOIN pedidos_produtos AS pp ON pe.id = pp.id_pedidos LEFT JOIN produtos AS pr ON pp.id_produtos = pr.id  WHERE pe.registro > date_format(NOW(), "%Y-%m-%d") ;`;
     connection.query( query,
         (err, results) => {
             if (err) {
                 res.status(400).send(err)
             } else {
+                console.log(`results: ${results[0].id_pedidos}`);
 
-                // Guarda todos os ids dos pedidos na variável
-                const id_pedidos = results
+                const pedidos = [];
 
-                // Array final com os pedidos listados juntos dos produtos
-                const pedidos_produtos = results;
-
-                // Função recursiva
-                const loopRecursivo = ( index, length ) => {
-
-                    // Esse é o breque e também a conclusão do loop
-                    if( index >= length ){
-                        res.status(200).send(pedidos_produtos)
-                        return;
-                    }
-                        
-                    let id_pedido = null;
+                results.forEach((result) => {
+                    // Verifica qual o índice do pedido no array pedidos:
+                    const indexPedido = pedidos.findIndex((item, index) => (item.id === result.id_pedidos));
                     
-                    // Guarda o id do pedido atual
-                    if( id_pedidos[index] ){
-                        id_pedido = id_pedidos[index].id;
-                    }else{ // Se não houver, segue para o próximo loop
-                        index += 1;
-                        loopRecursivo(index, length)
-                        return;
+                    if(indexPedido === -1) {
+                    // Se o pedido ainda não foi adicionado no array pedidos:
+                        pedidos.push({
+                            id: result.id_pedidos,
+                            registro: result.registro,
+                            mesa: result.mesa,
+                            observacao: result.observacao,
+                            id_cliente: result.id_cliente,
+                            status: result.status,
+                            id_venda: result.id_venda,
+                            produtos: [{
+                                quantidade: result.quantidade,
+                                id: result.id_produtos,
+                                nome: result.nome,
+                                descricao: result.descricao,
+                                id_categoria: result.id_categoria,
+                                imagem_url: result.imagem_url,
+                                preco_custo: result.preco_custo,
+                                preco_venda: result.preco_venda,
+                            }]
+                        })
+                    } else {
+                        pedidos[indexPedido].produtos.push({
+                            quantidade: result.quantidade,
+                            id: result.id_produtos,
+                            nome: result.nome,
+                            descricao: result.descricao,
+                            id_categoria: result.id_categoria,
+                            imagem_url: result.imagem_url,
+                            preco_custo: result.preco_custo,
+                            preco_venda: result.preco_venda,
+                        });
                     }
+                });
 
-                    BuscaProdutosPedido(id_pedido)
-                    .then(res => {
-
-                        pedidos_produtos[index].produto = {...res};
-
-                        // Adiciona +1 ao index e continua com a função recursiva
-                        index += 1;
-                        loopRecursivo(index, length)
-
-                    })
-                    .catch(res => {
-                        console.log(res);
-                        return; // em caso de erro da requisição ele sai da função de loop direto
-                    })
-                    
-
-                }
-
-                // Starta o loop, sempre começa do zero
-                loopRecursivo(0, id_pedidos.length)
+                res.status(200).send(pedidos);
 
             }
         }
@@ -192,6 +190,7 @@ exports.BuscaNaoConcluidoPorMesa = ( req, res ) => {
 
 } 
 
+// *********** TODO:     Trazer os produtos juntos dos pedidos
 exports.BuscaNaoEnviadoPorMesa = ( req, res ) => {
 
     const mesa = req.params.mesa;

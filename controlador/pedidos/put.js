@@ -15,21 +15,21 @@ exports.Altera = ( req, res ) => {
             if (err) {
                 res.status(400).send(err)
             } else {
-                //res.status(201).send(results)
+                res.status(201).send(results)
                 
-                const produtos = req.body.produtos;
+                /*const produtos = req.body.produtos;
                 
                 if(!(err = InsereProdutosPedido ( produtos, id))){
                     res.status(201).send(results)
                 }else{
-                    res.status(400).send(err)
-                }
+                    res.status(400).send(err)*/
             }
         }
-    );
+    )
 }
 
-function InsereProdutosPedido ( produtos, id_pedidos) {
+
+/*function InsereProdutosPedido ( produtos, id_pedidos) {
     for (const produto of produtos) {
 
         const id_produtos = produto.id_produtos;
@@ -47,5 +47,5 @@ function InsereProdutosPedido ( produtos, id_pedidos) {
         );
     }
 }
-
+*/
 

@@ -4,11 +4,11 @@ content-type: application/json
 
 {
     "produtos" : [
-        {"id_produtos": "22", "quantidade": "51" },
-        {"id_produtos": "23", "quantidade": "41" }
+        {"id_produtos": 22, "quantidade": 51 },
+        {"id_produtos": 23, "quantidade": 41 }
     ],
-    "observacao" : "Testando o pedido 9, sou Alérgico",
-    "mesa" : 9,
+    "observacao" : "Testando o pedido mesa 29, para o mateus poder testar",
+    "mesa" : 27,
     "id_cliente" : 4
 }
 
@@ -17,10 +17,6 @@ PUT http://localhost:3001/pedidos/altera/7 HTTP/1.1
 content-type: application/json
 
 {
-    "produtos" : [
-        {"id_produtos": "22", "quantidade": "51" },
-        {"id_produtos": "23", "quantidade": "41" }
-    ],
     "observacao" : "Testando o pedido 9, sou Alérgico",
     "mesa" : 9,
     "id_cliente" : 4,
@@ -28,7 +24,7 @@ content-type: application/json
 }
 
 ### GET de Pedido pela Mesa
-GET  http://localhost:3001/pedidos/busca_mesa/6 HTTP/1.1
+GET  http://localhost:3001/pedidos/busca_nao_enviado_por_mesa/27 HTTP/1.1
 content-type: application/json
 
 ### GET de Pedido pelo id_pedido
@@ -38,3 +34,8 @@ content-type: application/json
 ### GET de Pedidos Hoje
 GET  http://localhost:3001/pedidos/busca_todos_hoje HTTP/1.1
 content-type: application/json 
+
+### GET de Pedidos por mesa
+GET  http://localhost:3001/pedidos/busca_todos_hoje HTTP/1.1
+content-type: application/json 
+

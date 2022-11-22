@@ -4,11 +4,11 @@ content-type: application/json
 
 {
     "pedidos" : [
-        {"id_pedidos": "33"}
+        {"id_pedidos": "122"}
     ],
-    "total_custo": 10.00,
-    "total_venda": 10.00,
+    "total_custo": 1000.00,
+    "total_venda": 1453.80,
     "forma_de_pagamento": "Cartão", 
     "observacao": "Lanche",
-    "id_cliente": "4"
+    "id_cliente": "1"
 }

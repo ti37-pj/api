@@ -14,9 +14,10 @@ exports.Insere = ( req, res ) => {
             } else {
                             
                 const produtos = req.body.produtos;
-                const id_vendas = results.insertId; 
+                const id_pedido = results.insertId; 
+                //console.log(produtos);
                 
-                if(!(err = InsereProdutosPedido ( produtos, id_vendas))){
+                if(produtos && !(err = InsereProdutosPedido ( produtos, id_pedido))){
                     res.status(201).send(results)
                 }else{
                     res.status(400).send(err)
@@ -26,18 +27,21 @@ exports.Insere = ( req, res ) => {
     );
 }
 
-function InsereProdutosPedido ( produtos, id_pedidos) {
+function InsereProdutosPedido ( produtos, id_pedido) {
     for (const produto of produtos) {
 
         const id_produtos = produto.id_produtos;
         const quantidade = produto.quantidade;
+//console.log(produto);
 
-        const query = ` INSERT INTO pedidos_produtos (id_pedidos, id_produtos, quantidade) VALUES ( ${id_pedidos}, ${id_produtos}, ${quantidade} ); ` ;
+        const query = ` INSERT INTO pedidos_produtos (id_pedidos, id_produtos, quantidade) VALUES ( ${id_pedido}, ${id_produtos}, ${quantidade} ); ` ;
         connection.query( query,
             (err, results) => {
                 if (err) {
+                 //   console.log(err);
                     return err
                 } else {
+                  //  console.log(results);
                     return 0
                 }
             }       

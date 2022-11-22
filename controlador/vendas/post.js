@@ -13,16 +13,18 @@ exports.Insere = ( req, res ) => {
         (err, results) => {
 
             if(err) {
+                console.log(err);
 
                 res.status(400).send(err)
 
             } else{
-
+                console.log(results);
                 const pedidos = req.body.pedidos;
                 const id_vendas = results.insertId;
 
                 InserePedidoVendas(pedidos, id_vendas)
                 .then( value => {
+                    console.log(results);
                     res.status(200).send(results)
                 })
                 .catch( error => {
@@ -37,14 +39,15 @@ exports.Insere = ( req, res ) => {
 function InserePedidoVendas ( pedidos, id_venda) {
 
     return new Promise( (resolve, reject) => {
-
+        console.log(pedidos);
         for (const pedido of pedidos) {
-
+            console.log(pedido);
             const id = pedido.id_pedidos
 
             const query = ` UPDATE pedidos SET status = "concluido", id_venda = ${id_venda} WHERE id = ${id};`;
             connection.query( query,
                 (err, results) => {
+                    console.log(results);
                     if (err) {
                         reject (err)
                     } else {
